@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Gold M5 Pro - Fix EMA Colors</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #000; overflow: hidden; }
+        .chart-container { height: 100vh; width: 100vw; position: relative; }
+        #info-box {
+            position: absolute; top: 15px; right: 15px; z-index: 10;
+            background: rgba(19, 23, 34, 0.9); padding: 12px;
+            border: 1px solid #363c4e; border-radius: 6px;
+            color: #d1d4dc; font-family: sans-serif; font-size: 13px;
+            pointer-events: none; text-align: right;
+        }
+        .status-on { color: #00ff88; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="info-box">
+        <div style="color: #ff9800; font-weight: bold; margin-bottom: 4px;">GOLD INTRADAY PRO (M5)</div>
+        <div>สถานะ: <span class="status-on">LIVE ONLINE</span></div>
+        <div style="color: #00BCD4;">EMA 9 (Fast) ●</div>
+        <div style="color: #FF9800;">EMA 21 (Slow) ●</div>
+        <div style="color: #888; font-size: 11px; margin-top: 5px;">Pivot Points HL ●</div>
+    </div>
+
+    <div class="chart-container">
+        <div id="tv_chart_container" style="height:100%;width:100%"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+        <script type="text/javascript">
+            new TradingView.widget({
+                "autosize": true,
+                "symbol": "OANDA:XAUUSD",
+                "interval": "5",
+                "timezone": "Asia/Bangkok",
+                "theme": "dark",
+                "style": "1",
+                "locale": "th",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": false,
+                "withdateranges": true,
+                "hide_side_toolbar": false,
+                "allow_symbol_change": true,
+                "container_id": "tv_chart_container",
+                "studies": [
+                    {
+                        "id": "MASimple@tv-basicstudies",
+                        "title": "EMA 9",
+                        "inputs": { "length": 9 }
+                    },
+                    {
+                        "id": "MASimple@tv-basicstudies",
+                        "title": "EMA 21",
+                        "inputs": { "length": 21 }
+                    },
+                    {
+                        "id": "PivotPointsHighLow@tv-basicstudies",
+                        "inputs": { "leftBars": 10, "rightBars": 10 }
+                    }
+                ],
+                "studies_overrides": {
+                    // บังคับสี EMA เส้นที่ 1
+                    "moving average.ma.color": "#00BCD4", 
+                    "moving average.ma.linewidth": 2,
+                    // บังคับสี EMA เส้นที่ 2 (ต้องคลิกตั้งค่าในกราฟหาก Widget ไม่ยอมเปลี่ยนให้อัตโนมัติ)
+                    "moving average.ema.color": "#FF9800"
+                }
+            });
+        </script>
+    </div>
+
+</body>
+</html>
